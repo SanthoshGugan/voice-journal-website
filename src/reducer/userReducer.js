@@ -57,7 +57,7 @@ const userSlice = createSlice({
 
 const userLogin = createAsyncThunk(
     'user/login',
-    async (params: UserLogin) => {
+    async (params) => {
         const { email, id } = params;
         const response = await loginUserApi(id, email);
         return response.data;
@@ -66,7 +66,7 @@ const userLogin = createAsyncThunk(
 
 const userSignUp = createAsyncThunk(
     'user/signup',
-    async (user: User) => {
+    async (user) => {
         const response = await signUpUserApi(user);
         return response.data;
     }
@@ -74,7 +74,7 @@ const userSignUp = createAsyncThunk(
 
 const userLogout = createAsyncThunk(
     'user/logout',
-    async (id: number) => {
+    async (id) => {
         await logoutUserApi(id);
     }
 );
