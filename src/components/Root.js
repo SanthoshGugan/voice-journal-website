@@ -8,10 +8,20 @@ const Root = () => {
     return (
         <Box>
             <Header/>
-            <Box>
-            <NavBar />
-            <Outlet />
-            </Box>
+            <div style={{
+                display: 'flex',
+                height: '94vh'
+            }}>
+                <NavBar />
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 'auto 1 0'
+                }}>
+                    <Outlet />  
+                </div>
+            </div>
         </Box>
     );
 };

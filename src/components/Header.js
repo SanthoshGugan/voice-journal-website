@@ -4,13 +4,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { IconButton } from "@mui/material";
 export const Header = () => {
     return <div style={{
-        minHeight: '4rem',
+        height: '6vh',
         borderBottom: '0.1rem solid grey',
         backgroundColor: '#A396FF',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0  2rem'
+        padding: '0 2rem'
     }}>
         <div style={{
             display: 'flex',
