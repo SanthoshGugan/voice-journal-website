@@ -1,6 +1,7 @@
 import React from "react";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { FormControl, Input, InputAdornment, InputLabel } from "@mui/material";
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import { AccountCircle } from "@mui/icons-material";
 
 
@@ -28,7 +29,7 @@ const JournalRecorder = () => {
                     fontSize: '60px'
                 }}/>
             </div>
-            <FormControl variant="standard" onSubmit={() => console.log(" ON Submit")}>
+            <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
                 With a start adornment
                 </InputLabel>
@@ -36,7 +37,7 @@ const JournalRecorder = () => {
                 id="input-with-icon-adornment"
                 startAdornment={
                     <InputAdornment position="start">
-                    <AccountCircle />
+                    <DriveFileRenameOutlineIcon />
                     </InputAdornment>
                 }
                 />
