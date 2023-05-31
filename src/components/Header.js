@@ -8,7 +8,6 @@ export const Header = () => {
 
     const { isNavVisible } = useSelector(state => state.app);
     const dispatch = useDispatch();
-    console.log("isNav visibility : " + isNavVisible);
 
     const toggleNav = () => {
         dispatch(toggleNavVisibility(!isNavVisible));
