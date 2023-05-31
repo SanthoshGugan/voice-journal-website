@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL } from "./url";
-import Journal from "../model/Journal";
 
 const journalUrl = `${BASE_URL}/journal`;
 

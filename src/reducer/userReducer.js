@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loginUserApi, logoutUserApi, signUpUserApi } from "../api/userApis";
-import { UserLogin } from "../model/UserLoginReq";
-import User from "../model/User";
 import { STATUS } from "../util/constants";
 
 const initialState = {
@@ -79,6 +77,6 @@ const userLogout = createAsyncThunk(
     }
 );
 
-export const {} = userSlice.actions;
+// export const {} = userSlice.actions;
 
 export default userSlice.reducer;

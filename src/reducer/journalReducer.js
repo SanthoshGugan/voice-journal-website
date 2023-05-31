@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createJournalApi, getJournalApi, postJournalAudioApi } from "../api/journalApi";
-import Journal from "../model/Journal";
 import { STATUS } from "../util/constants";
 
 const initialState = {
@@ -96,6 +95,6 @@ const downloadJournalAudioApi = createAsyncThunk(
     }
 );
 
-export const {} = journalSlice.actions;
+// export const {} = journalSlice.actions;
 
 export default journalSlice.reducer;

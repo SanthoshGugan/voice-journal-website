@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Tags } from "../model/Tag";
 import { addTagToJournalApi, getJournalByTagNameApi, getTagApi, postTagApi } from "../api/tagApi";
 import { AddTagToJournalClass } from "../model/AddTagToJournal";
 import { STATUS } from "../util/constants";
@@ -119,6 +118,6 @@ export const getTagsForJournal = createAsyncThunk(
     }
 );
 
-export const {} = tagSlice.actions;
+// export const {} = tagSlice.actions;
 
 export default tagSlice.reducer;

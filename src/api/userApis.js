@@ -1,5 +1,4 @@
 import axios from "axios";
-import User from "../model/User";
 import { BASE_URL } from "./url";
 const USER_URL = `${BASE_URL}/user`
 

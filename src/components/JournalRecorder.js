@@ -1,13 +1,59 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import { Button, FormControl, IconButton, Input, InputAdornment, InputLabel, colors } from "@mui/material";
+import { Button, FormControl, IconButton, Input, InputAdornment, InputLabel } from "@mui/material";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import { AccountCircle } from "@mui/icons-material";
-import CheckIcon from '@mui/icons-material/Check';
 
 
 const JournalRecorder = () => {
     const [isRecording, setIsRecording] = useState(false);
+    const [audioChunks, setAudioChunks] = useState([]);
+
+    const audioStreamRef = useRef(null);
+    const mediaRecorderRef = useRef(null);
+
+    const startRecording = async () => {
+        try {
+            const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            audioStreamRef.current = audioStream;
+            const mediaRecorder = new MediaRecorder(audioStream);
+            mediaRecorderRef.current = mediaRecorder;
+
+            mediaRecorder.addEventListener('dataavailable', (event) => {
+                if (event.data.size > 0) { 
+                    setAudioChunks((chunks) => [...chunks, event.data]);
+                }
+            });
+            mediaRecorder.start();
+            setIsRecording(true);
+        } catch(err) {
+            console.error("Error accessing microphone : "+err);
+        }
+    };
+
+    const stopRecording = () => {
+        const mediaRecorder = mediaRecorderRef.current;
+        const audioStream = audioStreamRef.current;
+        mediaRecorder.stop();
+        audioStream.getTracks().forEach((track) => track.stop());
+        setIsRecording(false);
+        mediaRecorderRef.current = null;
+        audioStreamRef.current = null;
+    }
+
+    const downloadAudio = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const link = document.createElement('a');
+        link.href = audioUrl;
+        link.download = 'recording.mp3';
+        link.click();
+    }
+
+    const handleRecord = () => {
+        if (isRecording) stopRecording();
+        else startRecording();
+    }
+
     return (
         <div style={{
             display: 'flex',
@@ -28,13 +74,14 @@ const JournalRecorder = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <IconButton onClick={() => setIsRecording(!isRecording)}>
+                <IconButton onClick={() => handleRecord()}>
                     <KeyboardVoiceIcon sx={{
                         fontSize: '60px',
                         color: isRecording ? '#FFB6FF' : 'grey'
                     }}/>
                 </IconButton>
             </div>
+            <div style={{ opacity: isRecording ? '100%': '0%'}} >recording...</div>
             <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
                 Journal Name
@@ -55,7 +102,9 @@ const JournalRecorder = () => {
                 }}>
                     <Button variant="outlined" style={{
                         flex: '5rem 0 0'
-                    }}> Upload </Button>
+                    }}
+                    onClick={() => downloadAudio()}
+                    > Upload </Button>
                 </div>
                 
             </FormControl>
