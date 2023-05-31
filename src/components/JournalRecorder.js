@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import { FormControl, Input, InputAdornment, InputLabel } from "@mui/material";
+import { Button, FormControl, IconButton, Input, InputAdornment, InputLabel, colors } from "@mui/material";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import { AccountCircle } from "@mui/icons-material";
+import CheckIcon from '@mui/icons-material/Check';
 
 
 const JournalRecorder = () => {
+    const [isRecording, setIsRecording] = useState(false);
     return (
         <div style={{
             display: 'flex',
@@ -16,22 +18,26 @@ const JournalRecorder = () => {
         }}>
             <div style={{
                 padding: '1rem',
-                border: '2px solid #acacac',
+                border: '2px solid',
+                borderColor: isRecording ? '#f2f2f2' : '#acacac',
                 borderRadius: '50px',
-                backgroundColor: '#f2f2f2',
+                backgroundColor: isRecording ? '#BFB6FF': '#f2f2f2',
                 width: '2rem',
                 height: '2rem',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                <KeyboardVoiceIcon sx={{
-                    fontSize: '60px'
-                }}/>
+                <IconButton onClick={() => setIsRecording(!isRecording)}>
+                    <KeyboardVoiceIcon sx={{
+                        fontSize: '60px',
+                        color: isRecording ? '#FFB6FF' : 'grey'
+                    }}/>
+                </IconButton>
             </div>
             <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
-                With a start adornment
+                Journal Name
                 </InputLabel>
                 <Input
                 id="input-with-icon-adornment"
@@ -41,6 +47,17 @@ const JournalRecorder = () => {
                     </InputAdornment>
                 }
                 />
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '1rem'
+                }}>
+                    <Button variant="outlined" style={{
+                        flex: '5rem 0 0'
+                    }}> Upload </Button>
+                </div>
+                
             </FormControl>
         </div>
     );

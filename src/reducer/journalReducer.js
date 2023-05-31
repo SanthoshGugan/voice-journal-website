@@ -9,7 +9,7 @@ const initialState = {
     uploadJournalAudioStatus: STATUS.IDLE,
     downloadJOurnalAudioStatus: STATUS.IDLE,
     journal: {},
-    journalAudio: null
+    journalAudio: null,
 };
 
 const reducers = {};
