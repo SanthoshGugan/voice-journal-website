@@ -2,11 +2,17 @@ import React, { useRef, useState } from "react";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { Button, FormControl, IconButton, Input, InputAdornment, InputLabel } from "@mui/material";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import { uploadJournalAudio } from "../reducer/journalReducer";
+import { useDispatch } from "react-redux";
 
 
 const JournalRecorder = () => {
+    const dispatch = useDispatch();
+
     const [isRecording, setIsRecording] = useState(false);
     const [audioChunks, setAudioChunks] = useState([]);
+    const [filename, setFileName] = useState('');
+    const [fileNameEmptyCheck, setFileNameEmptyCheck] = useState(false);
 
     const audioStreamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
@@ -54,6 +60,15 @@ const JournalRecorder = () => {
         else startRecording();
     }
 
+    const uploadAudioJournal = async () => {
+        if (filename == '') {
+            setFileNameEmptyCheck(true);
+            return;
+        }
+        const audioFile = new Blob(audioChunks, { type: 'audio/mp3' });
+        await dispatch(uploadJournalAudio({audioFile, filename, journal_id: 1 }));
+    }
+
     return (
         <div style={{
             display: 'flex',
@@ -82,17 +97,21 @@ const JournalRecorder = () => {
                 </IconButton>
             </div>
             <div style={{ opacity: isRecording ? '100%': '0%'}} >recording...</div>
+            <div style={{ opacity: fileNameEmptyCheck ? '100%': '0%', color: 'red'}} >File name is empty</div>
+
             <FormControl variant="standard">
                 <InputLabel htmlFor="input-with-icon-adornment">
-                Journal Name
+                    Journal Name
                 </InputLabel>
                 <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                    <InputAdornment position="start">
-                    <DriveFileRenameOutlineIcon />
-                    </InputAdornment>
-                }
+                    id="input-with-icon-adornment"
+                    startAdornment={
+                        <InputAdornment position="start">
+                            <DriveFileRenameOutlineIcon />
+                        </InputAdornment>
+                    }
+                    onChange={e => {setFileName(e.target.value);}}
+                    value={filename}
                 />
                 <div style={{
                     display: 'flex',
@@ -103,7 +122,7 @@ const JournalRecorder = () => {
                     <Button variant="outlined" style={{
                         flex: '5rem 0 0'
                     }}
-                    onClick={() => downloadAudio()}
+                    onClick={() => uploadAudioJournal()}
                     > Upload </Button>
                 </div>
                 

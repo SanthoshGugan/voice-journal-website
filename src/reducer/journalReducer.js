@@ -79,10 +79,10 @@ const getJournal = createAsyncThunk(
     }
 );
 
-const uploadJournalAudio = createAsyncThunk(
+export const uploadJournalAudio = createAsyncThunk(
     'journal/uploadAudio',
-    async (audioFile) => {
-        const response = await postJournalAudioApi(audioFile);
+    async (req) => {
+        const response = await postJournalAudioApi(req);
         return response.data;
     }
 );

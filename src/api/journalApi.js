@@ -7,16 +7,13 @@ export const createJournalApi =async (journal) => axios.post(`${journalUrl}/`, {
 
 export const getJournalApi = async (id) => axios.get(`${journalUrl}/${id}`);
 
-export const postJournalAudioApi = async (audioFile) => {
-    const formData = new FormData();
-    formData.append('audio', audioFile);
-
-
+export const postJournalAudioApi = async ({audioFile, filename, journal_id }) => {
     const headers = {
         'Content-Type': 'audio/mp3',
-        'Content-Disposition': 'attachment; filename="audiofile.mp3"',
+        'Content-Disposition': `attachment; filename="${filename}.mp3"`,
+        'Journal-Id': journal_id
       };
-    return axios.post(`${journalUrl}/upload`, formData, { headers })
+    return axios.post(`${journalUrl}/upload`, audioFile, { headers })
 };
 
 
